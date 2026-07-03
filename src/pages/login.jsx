@@ -1,21 +1,28 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const userCredential = await login(email, password);
+    const userCredential = await login(email, password);
 
-      console.log("Inicio de sesión exitoso");
-      console.log(userCredential.user);
+    console.log("Inicio de sesión exitoso");
+    console.log(userCredential.user);
 
-      alert("Bienvenido " + userCredential.user.email);
-    } catch (error) {
+    alert("Bienvenido " + userCredential.user.email);
+
+    console.log("Voy al Dashboard...");
+    navigate("/dashboard");
+
+    }   catch (error) {
       console.error(error);
 
       alert("Error: " + error.message);
