@@ -7,13 +7,19 @@ import {
   doc,
   query,
   where,
+  serverTimestamp,
 } from "firebase/firestore";
 
 import { db } from "./firebaseConfig";
 
 // Agregar tarea
-export const addTask = async (task) => {
-  return await addDoc(collection(db, "tasks"), task);
+export const addTask = async (task, uid) => {
+  return await addDoc(collection(db, "tasks"), {
+    ...task,
+    uid,
+    completed: false,
+    createdAt: serverTimestamp(),
+  });
 };
 
 // Obtener tareas de un usuario
